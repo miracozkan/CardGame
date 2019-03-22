@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import kotlinx.android.synthetic.main.activity_main2.*
 
 class Main2Activity : AppCompatActivity(), View.OnClickListener {
@@ -19,6 +21,7 @@ class Main2Activity : AppCompatActivity(), View.OnClickListener {
         Handler().postDelayed({
             openCard(cardOne)
             openCard(cardTwo)
+
         }, delayMs)
     }
 
@@ -35,11 +38,11 @@ class Main2Activity : AppCompatActivity(), View.OnClickListener {
         } else if (clickedCardId2 == null && clickedCardId != null) {
             clickedCardId2 = v
             if ((clickedCardId2!!).mTag.toString() == (clickedCardId!!).mTag.toString()) {
-                delayDelete(clickedCardId!!, clickedCardId2!!, 500)
+                delayDelete(clickedCardId!!, clickedCardId2!!, 700)
                 clickedCardId = null
                 clickedCardId2 = null
             } else {
-                delayOpen(clickedCardId!!, clickedCardId2!!, 500)
+                delayOpen(clickedCardId!!, clickedCardId2!!, 700)
                 clickedCardId = null
                 clickedCardId2 = null
             }
@@ -55,7 +58,9 @@ class Main2Activity : AppCompatActivity(), View.OnClickListener {
         for (index in 1..36) {
             cardsArray.add(Cards(this, index))
             cardsArray[index - 1].setOnClickListener(this)
+
         }
+
         //Shuffle
         for (index in 0..35) {
             val rnd: Int = (0..35).random()
@@ -64,15 +69,21 @@ class Main2Activity : AppCompatActivity(), View.OnClickListener {
             cardsArray[index] = swap
         }
 
-        //AddActivity
+        //AddImageView
         for (index in 0..35) {
             lnr.addView((cardsArray[index]))
         }
     }
 
-    //OpenCard
+    //OpenCard or CloseCard
     private fun openCard(card: Cards) {
         if (!card.isOpen) {
+
+            YoYo.with(Techniques.FlipInX)
+                .duration(700)
+                .repeat(0)
+                .playOn(findViewById(card.id))
+
             card.setBackgroundResource(card.mTag)
             card.isOpen = true
             card.isClickable = false
@@ -80,7 +91,6 @@ class Main2Activity : AppCompatActivity(), View.OnClickListener {
             card.isOpen = false
             card.setBackgroundResource(card.idBg)
             card.isClickable = true
-
         }
     }
 }
