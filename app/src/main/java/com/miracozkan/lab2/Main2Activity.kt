@@ -1,5 +1,6 @@
 package com.miracozkan.lab2
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -9,6 +10,10 @@ import com.daimajia.androidanimations.library.YoYo
 import kotlinx.android.synthetic.main.activity_main2.*
 
 class Main2Activity : AppCompatActivity(), View.OnClickListener {
+
+    private var score: Int = 0
+    private var attempt: Int = 0
+
 
     private fun delayDelete(cardOne: Cards, cardTwo: Cards, delayMs: Long) {
         Handler().postDelayed({
@@ -39,10 +44,24 @@ class Main2Activity : AppCompatActivity(), View.OnClickListener {
             clickedCardId2 = v
             if ((clickedCardId2!!).mTag.toString() == (clickedCardId!!).mTag.toString()) {
                 delayDelete(clickedCardId!!, clickedCardId2!!, 700)
+
+                score += 10
+                scoreBoard.text = "Score : $score"
+                attempt++
+                attempsBoard.text = "Attemps : $attempt"
+
+                if (score == 180) {
+                    startActivity(intent)
+                }
+
                 clickedCardId = null
                 clickedCardId2 = null
             } else {
                 delayOpen(clickedCardId!!, clickedCardId2!!, 700)
+
+                attempt++
+                attempsBoard.text = "Attemps : $attempt"
+
                 clickedCardId = null
                 clickedCardId2 = null
             }
@@ -53,12 +72,13 @@ class Main2Activity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
+        val intent = Intent(Main2Activity@ this, Main2Activity::class.java)
+
         //AddArray
         val cardsArray = arrayListOf<Cards>()
         for (index in 1..36) {
             cardsArray.add(Cards(this, index))
             cardsArray[index - 1].setOnClickListener(this)
-
         }
 
         //Shuffle
@@ -88,6 +108,12 @@ class Main2Activity : AppCompatActivity(), View.OnClickListener {
             card.isOpen = true
             card.isClickable = false
         } else {
+
+            YoYo.with(Techniques.FlipInY)
+                .duration(700)
+                .repeat(0)
+                .playOn(findViewById(card.id))
+
             card.isOpen = false
             card.setBackgroundResource(card.idBg)
             card.isClickable = true

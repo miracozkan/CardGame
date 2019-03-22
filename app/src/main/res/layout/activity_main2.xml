@@ -21,27 +21,19 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/attemps"
-        />
+                android:id="@+id/attempsBoard"
+                android:text="Attemps : 0"/>
         <TextView
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/result"
-        />
-        <TextView
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/score"/>
+                android:id="@+id/scoreBoard" android:text="Score : 0"/>
     </LinearLayout>
     <GridLayout
             android:background="@color/colorPrimaryDark"
-            android:layout_weight="0.3"
+            android:layout_weight="0.2"
             android:id="@+id/lnr"
             android:columnCount="6"
             android:rowCount="6"

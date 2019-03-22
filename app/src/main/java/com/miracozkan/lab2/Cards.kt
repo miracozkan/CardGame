@@ -18,7 +18,7 @@ class Cards(context: Context?, number: Int) : ImageView(context) {
     var isOpen: Boolean = false
     var idBg = -1
     var mTag: Int = -1
-    var mId = -1
+    private var mId = -1
 
     init {
         minimumHeight = 150
@@ -157,8 +157,8 @@ class Cards(context: Context?, number: Int) : ImageView(context) {
             }
             11 -> {
                 mTag = R.drawable.ic_viber
-                var a = 11
-                id = a
+                mId = 11
+                id = mId
                 isOpen = false
             }
             29 -> {
